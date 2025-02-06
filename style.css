@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дерево Любви</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f8f0e3;
+        }
+        .container {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .tree {
+            width: 800px; /* Подстроено под твое изображение */
+            height: auto;
+        }
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Корпоративное Дерево Любви</h2>
+<p>Кликните на сердечко, чтобы оставить сообщение!</p>
+
+<div class="container">
+    <img src="/mnt/data/file-P21ZKQp8idBQWzNWyKXzff" class="tree" alt="Дерево">
+    <div id="heartsContainer"></div>
+    <div class="tooltip" id="tooltip"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const heartsContainer = document.getElementById("heartsContainer");
+        const tooltip = document.getElementById("tooltip");
+
+        for (let i = 1; i <= 100; i++) {
+            let heart = document.createElement("img");
+            heart.src = "/mnt/data/file-96vGUWo1gpQq1bHcPhe3Ek";
+            heart.classList.add("heart");
+            heart.style.top = `${Math.random() * 400 + 50}px`; // Размещение по высоте
+            heart.style.left = `${Math.random() * 700}px`; // Размещение по ширине
+            heart.dataset.id = `heart${i}`;
+
+            heart.addEventListener("click", function () {
+                let message = prompt("Оставьте признание или благодарность:");
+                if (message) {
+                    localStorage.setItem(this.dataset.id, message);
+                    alert("Ваше сообщение сохранено!");
+                }
+            });
+
+            heart.addEventListener("mouseover", function (event) {
+                let savedMessage = localStorage.getItem(this.dataset.id);
+                if (savedMessage) {
+                    tooltip.textContent = savedMessage;
+                    tooltip.style.top = `${event.pageY + 10}px`;
+                    tooltip.style.left = `${event.pageX + 10}px`;
+                    tooltip.style.display = "block";
+                }
+            });
+
+            heart.addEventListener("mouseout", function () {
+                tooltip.style.display = "none";
+            });
+
+            heartsContainer.appendChild(heart);
+        }
+    });
+</script>
+
+</body>
+</html>
